@@ -2,14 +2,15 @@ import React, { useContext, useEffect } from "react";
 import { FormInput } from "../../components/formFields/FormInput";
 import { useForm } from "react-hook-form";
 import { FormButton } from "../../components/formFields/FormButton";
-import { UsersContext } from "../../context/userContext";
 import { defaultUsers } from "../../utils/const";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
+import { UsersContext } from "../../context/UsersContext";
 
 const Login = () => {
   const { userData } = useContext(UsersContext);
+  console.log(userData);
   const navigate = useNavigate();
   const schema = Yup.object().shape({
     email: Yup.string().required("Email is Required"),
@@ -41,17 +42,25 @@ const Login = () => {
   ];
 
   const checkUser = (data) => {
-    if (
-      userData[0].email !== data.email ||
-      userData[0].password !== data.password
-    ) {
+    if (userData.length > 0) {
+      if (
+        userData[0].email !== data.email ||
+        userData[0].password !== data.password
+      ) {
+        setError(
+          "password",
+          { type: "custome", message: "username/password incorrect" },
+          { shouldFocus: false }
+        );
+      } else {
+        navigate("/view-transactions");
+      }
+    } else {
       setError(
         "password",
-        { type: "custome", message: "username/password incorrect" },
+        { type: "custome", message: "There is no data in Context" },
         { shouldFocus: false }
       );
-    } else {
-      navigate("/view-transactions");
     }
   };
 

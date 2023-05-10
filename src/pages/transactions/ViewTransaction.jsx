@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
+import { Link } from "react-router-dom";
 import TableComp from "./components/TableComp";
-import FormSelect from "../../components/FormFields/FormSelect";
-import { Link, useParams } from "react-router-dom";
-import { Button } from "@mui/material";
-import { getLocalData } from "../../utils/helper";
+import { defaultTransactions } from "../../defaults/default.transactions";
+import { TransactionContext } from "../../context/TransactionContext";
+import FormNoValidateSelect from "../../components/formFields/FormNoValidateSelect";
 
 const ViewTransaction = () => {
-  const [locals, setLocal] = useState(() => getLocalData());
+  const { transactionsData } = useContext(TransactionContext);
+  const [locals, setLocal] = useState(transactionsData);
   const [group, setGroups] = useState([]);
-  const [Scroller, setScroller] = useState({
-    state: false,
-    field: "",
-  });
 
   // Initials
 
@@ -31,7 +29,6 @@ const ViewTransaction = () => {
   const groupBy = (e) => {
     let name = e.target.value;
 
-    setScroller({ ...Scroller, state: true, name: name });
     locals.reduce((groups, product) => {
       let transactionFrom = product[name];
       groups[transactionFrom] = groups[transactionFrom] ?? [];
@@ -47,7 +44,7 @@ const ViewTransaction = () => {
         <Link className="anchor" to="/add-transaction">
           Add Transaction
         </Link>
-        <FormSelect
+        <FormNoValidateSelect
           label="Group by Field Name : "
           options={initialValues}
           handleChange={groupBy}

@@ -6,7 +6,6 @@ export const FormInput = (props) => {
 
   return (
     <div>
-      <div className="errmsg"></div>
       <div>
         <div className="row g-3 align-items-center">
           <div className="col-auto">
@@ -16,11 +15,11 @@ export const FormInput = (props) => {
           </div>
           <div className="col-auto">
             <input
-              type={type?.type}
-              name={name?.name}
+              type={type}
+              name={name}
               className={className?.className}
               placeholder={placeholder?.placeholder}
-              {...register(name)}
+              {...(register ? register(name) : null)}
             />
           </div>
           <div className="col-auto">

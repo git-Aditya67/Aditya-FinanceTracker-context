@@ -6,7 +6,7 @@ import * as yup from "yup";
 
 import { FormInput } from "../../components/formFields/FormInput";
 import { FormButton } from "../../components/formFields/FormButton";
-import { UsersContext } from "../../context/userContext";
+import { UsersContext } from "../../context/UsersContext";
 import { registerField } from "../../utils/const";
 
 const Register = () => {
@@ -37,7 +37,7 @@ const Register = () => {
 
   const submitted = (data) => {
     if (userData.length === 0) {
-      setUserData([data]);
+      setUserData(() => [data]);
     } else {
       userData.push(data);
       setUserData((userData) => userData);
