@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 export const FormInput = (props) => {
   const { label, name, placeholder, type, register, errors, className } = props;
-
+  console.log("ajhgasd");
   return (
     <div>
       <div>
